@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./src:/code
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./db_data:/usr/lib/postgresql/data
+
+  migrations:
+    build: .
+    command: python manage.py migrate
+    env_file:
+      - .env
+    volumes:
+      - ./src:/code

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Item {{ item.id }}
+{% endblock %}
+
+{% block body %}
+<h2>{{ item.name }}</h2>
+<p>Description: {{ item.description }}</p>
+<p>Prices:
+    <ul>
+        {% for price in prices %}
+            <li>{{ price.currency }}: {{ price.price }}.00</li>
+        {% endfor %}
+    </ul>
+</p>
+<span>Choose which currency you want to buy and click 'Buy'</span><br>
+<select id="prices" name="prices">
+    <option value="rub">RUB</option>
+    <option value="usd">USD</option>
+</select>
+<button onclick="getStripeSession('{{ item.id }}')">Buy</button>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'js/getStripeSession.js' %}"></script>
+<script src="{% static 'js/changePrice.js' %}"
+{% endblock %}
