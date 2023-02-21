@@ -2,8 +2,7 @@ FROM python:3.10
 
 WORKDIR /code
 
-COPY Pipfile* /code/
-RUN pip install -U pipenv
-RUN pipenv install --deploy --ignore-pipfile --system
+COPY requirements.txt /code/
+RUN pip install -r requirements.txt
 
 COPY ./src /code/
